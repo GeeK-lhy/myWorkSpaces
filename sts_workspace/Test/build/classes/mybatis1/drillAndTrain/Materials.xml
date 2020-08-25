@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.MaterialsDao">
+	
+	<insert id="saveMaterials" parameterType="TrainingMaterials">
+		insert into tb_trainingmaterials values(null,#{name},#{link},#{uploadTime})
+	</insert>
+	<select id="selectVedioMaterials" resultType="TrainingMaterials">
+		select * from tb_trainingmaterials where name like '%.mp4%' or name like '%.avi%' or name like '%.rmvb%'
+				or name like '%.rm%' or name like '%.asf%' or name like '%.divx%' or name like '%.mpg%' or name like '%.mpeg%'
+				or name like '%.mpe%' or name like '%.wmv%' or name like '%.mkv%' or name like '%.vob%' 
+	</select>
+	
+		<select id="selectMaterials" resultType="TrainingMaterials">
+		select * from tb_trainingmaterials where name not like '%.mp4%' and name not like '%.avi%' and name not like '%.rmvb%'
+				and name not like '%.rm%' and name not like '%.asf%' and name not like '%.divx%' and name not like '%.mpg%' and name not like '%.mpeg%'
+				and name not like '%.mpe%' and name not like '%.wmv%' and name not like '%.mkv%' and name not like '%.vob%' 
+			
+	</select>
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.ReceiveMessageDao">
+  	<insert id="insert" parameterType="receivemessage" keyProperty="receiveId" useGeneratedKeys="true">
+  		insert into to_ReceiveMessage values (null,#{sendId},#{empId},1,null)
+  	</insert>
+	<select id="getReceiveMessage" resultType="map" parameterType="map">
+		select receiveId,messageTitle,empName,createDate,openDate from to_sendMessage s inner join to_receiveMessage r
+		on  s.sendId=r.sendId inner join tb_emp e
+		on  s.empId=e.empId
+		<where>
+		r.empId=#{empId} and r.messageState!=0
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			and CreateDate BETWEEN '2019-02-13' and '2019-02-21'
+		</if>
+		</where>
+<!-- 		where r.empId=#{empId} and r.messageState!=0 -->
+		order by receiveId
+		limit #{start},#{pageSize}
+	</select>
+	
+	<select id="getReceiveMessageByTime" resultType="map">
+			select receiveId,messageTitle,empName,createDate,openDate from to_sendMessage s inner join to_receiveMessage r
+		on  s.sendId=r.sendId inner join tb_emp e
+		on  s.empId=e.empId
+		where r.empId=#{empId} and r.messageState!=0 and CreateDate BETWEEN '2019-02-13' and '2019-02-21'
+		order by receiveId
+		limit #{start},#{pageSize}
+	</select>
+		
+		<select id="getReceiveMessageRecordCount" resultType="int" parameterType="map">
+			select count(*) from to_receiveMessage r, to_sendMessage s
+		  <where> 
+			r.empId=#{empId} and s.sendId=r.sendId
+			<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			and CreateDate BETWEEN '2019-02-13' and '2019-02-21'
+			</if>
+		  </where>
+			
+		</select>
+		
+		
+	  <select id="getReceiveMessageById" resultType="map">
+		select messageContent,receiveId,messageTitle,empName,createDate,openDate from to_sendMessage s inner join to_receiveMessage r
+		on  s.sendId=r.sendId inner join tb_emp e
+		on  s.empId=e.empId
+		where r.empId=#{empId} and r.messageState!=0 and receiveId=#{receiveId}
+
+  	</select>
+  	<update id="updateDate">
+  		update to_receiveMessage set openDate=now() where receiveId=#{receiveId}
+  	</update>
+	<update id="delete" parameterType="int[]">
+		update to_receiveMessage set messageState=0  where receiveId in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+		#{id}
+		</foreach>
+	</update>
+
+</mapper>

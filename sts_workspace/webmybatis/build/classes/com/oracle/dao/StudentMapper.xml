@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.StudentDao">
+<cache></cache>
+
+	<select id="get"  resultMap="myStudent">
+	select * from tb_student
+	</select>
+	
+	<select id="getAll" resultMap="myStudent" parameterType="map">
+	select studentId,studentName,degree,city,className,birth,c.classId classId,salary 
+	from tb_student s inner join tb_class c
+	on s.classId=c.classId
+	<where>
+ 		<if test="studentName!=null and studentName!=''">
+		studentName like concat('%',#{studentName},'%')
+		</if>
+		<if test="degree!=null and degree!=''">
+			and degree=#{degree}
+		</if>
+		<if test="city!=null and city!=''">
+			and city=#{city}
+		</if>
+		<if test="classId!=null and classId!=0">
+			and s.classId=#{classId}
+		</if>
+		
+<!-- 		<choose>
+			<when test="degree==null or degree==''">
+			degree in ('master','bachelor')
+			</when>
+			<otherwise>
+			 degree=#{degree}
+			</otherwise>
+		</choose> -->
+	</where>
+	</select>
+	
+	<delete id="delete" parameterType="int[]">
+  		delete from tb_student 
+  		where studentId in
+  		<foreach collection="array" item="id" open="(" separator="," close=")" index="index">
+  		#{id}
+  		</foreach>
+  		
+	</delete>
+	
+	<resultMap type="student" id="myStudent">
+	<id column="studentID" property="studentId"/>
+	<result column="classID" property="classId"/>
+ 	<result column="studentName" property="studentName"/> 
+	<result column="salary" property="salary"/>
+	<result column="city" property="city"/>
+	<result column="birth" property="birth"/>
+	<result column="degree" property="degree"/>
+	<result column="descript" property="descript"/>
+	<association property="tclass" javaType="Tclass">
+	 <id column="classID" property="classId"/>
+	 <result column="className" property="className"/>
+ 	 <result column="descript" property="descript"/> 
+	</association>	
+	</resultMap>
+</mapper>

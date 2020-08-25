@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.StudentDao">
+	<select id="getAll" resultMap="myStudent">
+	select * <include refid="student_table"/>
+	</select>
+	
+	<select id="getCount" resultType="int">
+	select count(*) from tb_student
+	</select>
+	
+	<select id="getAvgCount" resultType="map">
+	select count(*) count , avg(salary) average from tb_student 
+	</select>
+	
+	<select id="getDegree" resultType="map">
+	select  lower(degree) degree,count(degree) count from tb_student group by lower(degree)
+	</select>
+	
+	<select id="getByPage" parameterType="map" resultType="Student"> 
+	select * from tb_student limit #{start},#{size}
+	</select>
+	<select id="getPages" resultType="Student">
+	select * from tb_student limit #{start},#{size}
+	</select>
+	<select id="getDetials" resultType="map">
+	select studentId,studentName,className,degree,salary from tb_student s inner join tb_class c on s.classid=c.classid
+	</select>
+	
+	<select id="fuzzyQuery" resultType="Student" parameterType="String">
+	select * from tb_student where studentName like concat('%',#{String},'%')
+	</select>
+	
+	<select id="orderBy" resultType="Student">
+	select * from tb_student order by ${name}
+	</select> 
+	
+	<sql id="student_table">
+	from tb_student 
+	</sql>
+	
+	<resultMap type="student" id="myStudent">
+		<id column="studentID" property="studentID"/>
+	<result column="classId" property="classId"/>
+ 	<result column="studentName" property="name"/> 
+	<result column="salary" property="salary"/>		
+	</resultMap>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.OperatorDao">
+	<select id="getOperator" parameterType="map" resultType="operator">
+		select * from toperator where Operator_ID=#{operator_Id} 
+		and Operator_Pwd=#{operator_Pwd} and is_Admin=1 
+	
+	</select>
+	<select id="getAdmin" resultType="int">
+		select	is_admin from toperator where Operator_Id=#{id}
+	</select>
+
+</mapper>

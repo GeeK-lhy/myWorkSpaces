@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.SendAccidentDao">
+	<insert id="insertSendAccident" parameterType="SendAccident">
+		insert into tb_sentaccident values(null,#{title},#{time},#{source},#{accidentType},#{grade},#{address},#{responseGrade},now(),#{casualty},#{economicLoss},#{reason},#{sendUser},#{receiveUser},#{picAddress},#{status},#{addressRemark})
+	</insert>
+	<update id="editSendAccident" parameterType="SendAccident">
+		update tb_sentaccident set
+			TITLE = #{title},
+			TIME = #{time},
+			SOURCE = #{source},
+			ACCIDENTTYPE = #{accidentType},
+			GRADE = #{grade},
+			ADDRESS = #{address},
+			RESPONSEGRADE = #{responseGrade},
+			SENDTIME = now(),
+			CASUALTY = #{casualty},
+			ECONOMICLOSS = #{economicLoss},
+			REASON = #{reason},
+			SENDUSER = #{sendUser},
+			RECEIVEUSER = #{receiveUser},
+			STATUS=#{status},
+			ADDRESSREMARK=#{addressRemark},
+			PICADDRESS=#{picAddress}
+			where 
+			SENTACCIDENT_ID = #{sendaccident_id}
+	</update>
+	<update id="updateStatus">
+	update tb_sentaccident set status=#{newStatus} where SENTACCIDENT_ID = #{sendaccident_id}
+	
+	</update>
+</mapper>

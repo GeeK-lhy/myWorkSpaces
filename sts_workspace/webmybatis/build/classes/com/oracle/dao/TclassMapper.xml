@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.TclassDao">
+	<select id="getClassDetail" resultMap="myClass">
+	 select studentID,studentName,salary,degree,birth,city,c.classId classId,className,c.descript descript 
+	 from  tb_class c inner join tb_student s
+	 on s.classId=c.classId 
+	</select>
+	
+	<resultMap type="tclass" id="myClass">
+	 <id column="classId" property="classId"/>
+	 <result column="className" property="className"/>
+ 	 <result column="descript" property="descript"/> 
+	
+	<collection property="students" ofType="student">
+	 <id column="studentId" property="studentId"/>
+	 <result column="classId" property="classId"/>
+ 	 <result column="studentName" property="studentName"/> 
+	 <result column="salary" property="salary"/>
+	</collection>	
+	</resultMap>
+</mapper>

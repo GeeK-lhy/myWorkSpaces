@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.ReceiveAccidentDao">
+	<insert id="insertReceiveAccident" parameterType="SendAccident">
+		insert into tb_receiveaccident values(#{receiveaccident_id},#{title},#{time},#{source},#{accidentType},#{grade},#{address},#{responseGrade},now(),#{casualty},#{economicLoss},#{reason},#{sendUser},#{receiveUser},"0",#{picAddress})
+	</insert>
+	<update id="updateStatus">
+	update TB_RECEIVEACCIDENT set status = #{status} where receiveaccident_id=#{receiveaccident_id}
+	</update>
+	<select id="selectByStatus" resultType="ReceiveAccidentVo">
+		select * from tb_receiveaccident where receiveUser=#{receiveUser} and status="0"
+	</select>
+	
+	<select id="selectById" resultType="ReceiveAccidentVo">
+		select status from tb_receiveaccident where receiveaccident_id=#{id}
+	</select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE books SYSTEM "books.dtd">
+<books>
+ 	<book id="s456">
+		<isbn>123456</isbn>
+		<name>正念&amp;&apos;奇迹&apos;</name>
+		<price>60</price>
+		<author>&quot;一行禅师&quot;</author>
+	</book>
+	<book id="sky12345">
+		<isbn>45666</isbn>
+		<name>战争与和平</name>
+		<price>100</price>
+		<author>
+			<name>列夫·托尔斯泰</name>
+			<name>托尔斯泰</name>  
+		</author>		
+	</book>
+</books>

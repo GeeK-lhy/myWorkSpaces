@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.ReceiveMessageDao">
+  	<insert id="insert" parameterType="receivemessage" keyProperty="receiveId" useGeneratedKeys="true">
+  		insert into to_ReceiveMessage values (null,#{sendId},#{empId},1,null)
+  	</insert>
+	<select id="getReceiveMessage" resultType="map">
+		select receiveId,messageTitle,empName,createDate,openDate from to_sendMessage s inner join to_receiveMessage r
+		on  s.sendId=r.sendId inner join tb_emp e
+		on  s.empId=e.empId
+		where r.empId=#{empId} and r.messageState!=0
+	</select>
+
+</mapper>

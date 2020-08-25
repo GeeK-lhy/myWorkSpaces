@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+		<util:list id="list">
+				<value>java</value>
+				<value>mysql</value>
+				<value>spring</value>	
+		</util:list>
+		<bean id="dept" class="com.oracle.vo.Dept">
+			<property name="deptNo" value="10"></property>
+			<property name="dname" value="开发部"></property>
+			<property name="loc" value="哈尔滨"></property>
+		</bean>
+
+ 	<bean id="p" name="King" class="com.oracle.vo.Person" >
+		<constructor-arg index="0" type="String" value="519"> </constructor-arg>
+		<constructor-arg index="1" value="90"> </constructor-arg>
+	
+	</bean>
+	
+	
+	<bean id="bow" class="com.oracle.vo.Weapon" p:name="手里剑" p:power="5">
+
+	</bean>
+	
+	
+	
+	<bean id="p1" name="天奇,sky" class="com.oracle.vo.Person" scope="prototype">
+		<property name="name" value="刘浩宇" >
+		<!-- <null></null> -->
+		</property>
+		<property name="age" value="18"></property>
+		<property name="dept" ref="dept"></property>
+		<property name="hobby">
+			<array> 
+				<value>抽烟</value> 
+				<value>喝酒</value> 
+			 	<value>烫头</value> 
+			 </array>
+		</property>
+		<property name="skills">
+			<list>
+				<value>java</value>
+				<value>mysql</value>
+				<value>spring</value>
+			</list>
+		</property>
+		<property name="edu">
+			<set>
+				<value>东北林业大学</value>
+				<value>文中</value>
+			</set>
+		</property>
+		<property name="subject">
+			<map>
+				<entry key="高数" value="90"></entry>
+				<entry key="java" value="99"></entry>
+			</map>
+		</property>
+		<property name="weapon">
+			<list>
+				<bean class="com.oracle.vo.Weapon">
+					<property name="name" value="十全剑"></property>
+						<property name="power" value="5"></property>
+				</bean>
+				<ref bean="bow"/>
+			</list>
+			
+		</property>
+				
+		<property name="props">
+			<props>
+				<prop key="name">mysql</prop>
+				<prop key="passwrd">123456</prop>
+				
+			</props>
+		</property>
+	</bean>
+	
+		<bean id="p2" class="com.oracle.vo.Person" >
+		<property name="name" value="张翠山"></property>
+		<property name="age" value="98"></property>
+		<property name="dept" >
+			<bean class="com.oracle.vo.Dept">
+				<property name="deptNo" value="20"></property>
+				<property name="dname" value="技术部"></property>
+				<property name="loc" value="北京"></property>
+			</bean>
+		</property>
+			
+			<property name="skills">
+				<ref bean="list"/>
+			</property>
+			
+			
+	</bean>
+
+</beans>

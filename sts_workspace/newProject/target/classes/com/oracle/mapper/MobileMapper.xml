@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.MobileDao">
+	<insert id="addMobiles" parameterType="map">
+		insert into tmobiles values(null,#{mobile_Number},#{mobile_Type},#{card_Number},"Y")
+	</insert>
+	<select id="getNumber" resultType="mobile" >
+	select * from tmobiles where Mobile_Number=#{number} and Is_Available='Y'	
+	</select>
+	<update id="updateAvailable">
+		update tmobiles set Is_Available='N' where Mobile_Number=#{number}
+	</update>
+	<select id="checkAvailable" resultType="int">
+		select count(*) from tmobiles where Is_Available="Y"
+	</select>
+</mapper>

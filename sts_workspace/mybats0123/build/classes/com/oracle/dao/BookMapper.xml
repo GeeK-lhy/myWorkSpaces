@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.BookDao">
+
+ <select id="getAll" resultType="book">
+		 select * from books
+ </select>
+ <insert id="save" parameterType="book"  keyProperty="isbn">
+ 	insert into books values(null,#{bookName},#{price})
+ </insert>
+ <delete id="delete" parameterType="int">
+ 	delete from books where isbn=#{isbn}
+ </delete>
+ <update id="update" parameterType="book" >
+  update books set bookName=#{bookName},price=#{price} where isbn=#{isbn};
+ </update>
+</mapper>

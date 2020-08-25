@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.SendMessageDao">
+  	<insert id="insert" parameterType="sendmessage" keyProperty="sendId" useGeneratedKeys="true">
+  		insert into to_sendmessage values (null,#{empId},#{messageTitle},#{messageContent},now(),#{priority},1)
+  	</insert>
+  	<update id="delete" parameterType="int[]">
+  			update to_sendMessage set messageState=0 where sendId in
+  			<foreach collection="array" item="id" open="(" separator="," close=")">
+  			#{id}
+  			</foreach>
+  	
+  	</update>
+  	<select id="getSendMessageById" resultMap="mySendMessage">
+  			select s.empId empId,messageTitle,messageContent,createDate,receiveId,r.empId receverId,e.empName receiverName
+		from to_sendMessage s inner  join to_receiveMessage r 
+		on s.sendId=r.sendId  inner join tb_emp e on
+		r.empId=e.empId
+		where  s.empId=#{empId} and s.messageState=1 and s.sendId=#{Id}
+  	</select>
+  	<select id="getSendMessageRecordCount" resultType="int" parameterType="map">
+  		select count(*) from to_sendMessage
+  		 <where> 
+			empId=#{empId}
+			<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			and CreateDate BETWEEN '2019-02-13' and '2019-02-21'
+			</if>
+		  </where>
+  		
+
+
+  	</select>
+	<select id="getSendMessage" resultMap="mySendMessage" parameterType="map">
+		select s.sendId sendId,s.empId empId,messageTitle,messageContent,createDate,priority,s.messageState,receiveId,r.empId receverId,e.empName receiverName
+		from to_sendMessage s inner  join to_receiveMessage r 
+		on s.sendId=r.sendId  inner join tb_emp e on
+		r.empId=e.empId
+		<where> 
+			s.empId=#{empId} and s.messageState=1 
+			<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			and CreateDate BETWEEN '2019-02-13' and '2019-02-21'
+			</if>
+		 </where>
+		order by sendId
+		
+	</select>
+	<resultMap type="sendMessage" id="mySendMessage">
+	<id column="sendId" property="sendId"></id>
+	<result column="empId" property="empId"/>
+	<result column="messageTitle" property="messageTitle"/>
+	<result column="messageContent" property="messageContent"/>
+	<result column="createDate" property="createDate"/>
+	<result column="priority" property="priority"/>		
+	<result column="messageState" property="messageState"/>
+	 <collection property="list" ofType="ReceiveMessage">
+	 <id column="receiveId" property="receiveId"/>
+	 <result column="receiverId" property="empId"/>
+	 	<association property="receiver" javaType="emp">
+	 	 <id column="receiverId" property="empId"/>
+	 	 <result column="receiverName" property="empName"/>
+	 	</association>
+	 </collection>		
+	</resultMap>
+</mapper>

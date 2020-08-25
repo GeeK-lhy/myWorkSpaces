@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 	<properties resource="com/oracle/config/config.propeties">
+	</properties> -->
+	<settings>
+			<setting name="logImpl" value="log4j"/>
+			<setting name="useGeneratedKeys" value="true"/>
+	</settings>
+	
+	<typeAliases>
+	<!-- 	<typeAlias type="com.oracle.vo.Book" alias="book"/> -->
+		<package name="com.oracle.vo"/>
+	</typeAliases>
+ <environments default="development">
+ <environment id="development">
+ <transactionManager type="JDBC"/>
+ 
+ <dataSource type="POOLED">
+<!--  <property name="poolMaximumActiveConnections" value="2"/> -->
+ <property name="driver" value="com.mysql.jdbc.Driver"/>
+ <property name="url" value="jdbc:mysql://localhost:3306/text"/>
+ <property name="username" value="root"/>
+ <property name="password" value="tiger"/>
+ </dataSource>	
+ 	
+ </environment>
+ </environments>
+ <mappers>
+  <mapper resource="com/oracle/dao/SendMessageMapper.xml"/>
+  <mapper resource="com/oracle/dao/ReceiveMessageMapper.xml"/>
+    <mapper resource="com/oracle/dao/EmpMapper.xml"/>
+	<!-- <package name="com.oracle.dao"/> -->
+ </mappers>
+</configuration>
